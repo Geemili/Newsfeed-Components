@@ -134,6 +134,16 @@ class El {
         return this;
     }
 
+    text(textContent) {
+        this.element.textContent = textContent;
+        return this;
+    }
+
+    onClick(callback) {
+        this.element.onclick = callback;
+        return this;
+    }
+
     done() {
         return this.element;
     }
@@ -164,8 +174,8 @@ function div(className, children) {
 
 // Create article
 function createArticle(props) {
-     const el = div("article");
-     el.children([
+     const articleDiv = div("article");
+     articleDiv.children([
         h2(props.title),
         p(props.date).className("date"),
 
@@ -173,9 +183,17 @@ function createArticle(props) {
         p(props.secondParagraph),
         p(props.thirdParagraph),
 
-        span().className("expandButton"),
+        span("Read More")
+            .className("expandButton")
+            .onClick(createExpandPressedFn(articleDiv.element)),
     ]);
-    return el.done();
+    return articleDiv.done();
+}
+
+function createExpandPressedFn(articleDiv) {
+    return function() {
+        articleDiv.classList.toggle('article-open');
+    }
 }
 
 const articles = document.querySelector(".articles");
