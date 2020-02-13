@@ -85,6 +85,16 @@ const data = [
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
+  },
+  {
+    title: 'Use my cool new half-baked library',
+    date: 'A couple hours ago',
+    firstParagraph: `I had a problem, so I made a new library that solves it.`,
+
+    secondParagraph: `There are a few libraries already out there that do the same thing, but my library does it better!`,
+
+    thirdParagraph: `Therefore, you should use my library. Even if you don't have my problem! It's a sure way to make your problem
+                     more complex and increase your job security!`
   }
 ];
 
@@ -112,3 +122,31 @@ const data = [
   Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
 
 */
+
+// Create article
+function createArticle(props) {
+     const articleDiv = div("article");
+     articleDiv.children([
+        h2(props.title),
+        p(props.date).className("date"),
+
+        p(props.firstParagraph),
+        p(props.secondParagraph),
+        p(props.thirdParagraph),
+
+        span("Read More")
+            .className("expandButton")
+            .onClick(createExpandPressedFn(articleDiv.element)),
+    ]);
+    return articleDiv.done();
+}
+
+function createExpandPressedFn(articleDiv) {
+    return function() {
+        articleDiv.classList.toggle('article-open');
+    }
+}
+
+const articles = document.querySelector(".articles");
+data.map(createArticle).forEach(el => articles.appendChild(el));
+
