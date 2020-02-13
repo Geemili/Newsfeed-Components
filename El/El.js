@@ -46,11 +46,23 @@ function span(text) {
     return new El("span").text(text);
 }
 
+function li(text) {
+    return new El("li").text(text);
+}
+
 function div(className, children) {
     const el = new El("div");
     if (className !== undefined) {
         el.className(className);
     }
+    if (children !== undefined) {
+        el.children(children);
+    }
+    return el;
+}
+
+function ul(children) {
+    const el = new El("ul");
     if (children !== undefined) {
         el.children(children);
     }
